@@ -1,0 +1,44 @@
+name: Update Index Page
+
+# 動作するタイミング：mainブランチにpushされた時
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'pages/**'      # pagesフォルダに変更があった時
+      - 'scripts/**'    # またはスクリプトを変更した時
+
+# 権限の設定（リポジトリの内容を書き換えるため必要）
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. リポジトリのコードを取得
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      # 2. Pythonの準備
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # 3. 目次生成スクリプトを実行
+      - name: Run generation script
+        run: |
+          python scripts/generate_index.py
+
+      # 4. 変更（新しくできたindex.html）をGitHubに保存（コミット＆プッシュ）
+      - name: Commit and Push changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          
+          # 変更がある場合のみコミットする（エラー回避）
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update index.html" && git push)
