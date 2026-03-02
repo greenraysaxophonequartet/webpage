@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>作品集（チラシ案） | Green Ray Saxophone Quartet</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <style>
     /* ===== チラシ共通 ===== */
     .flyer-a4 {
@@ -45,15 +46,15 @@
       letter-spacing: 0.08em;
     }
     .f1-head h1 {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 900;
-      line-height: 1.4;
+      line-height: 1.5;
       margin-bottom: 8px;
     }
     .f1-head .sub {
       font-size: 12px;
       opacity: 0.85;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     /* 悩み共感ブロック 15% */
@@ -64,17 +65,29 @@
       padding: 14px 18px;
       border-radius: 0 8px 8px 0;
     }
-    .f1-pain .quote {
-      font-size: 12.5px;
+    .f1-pain .pain-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e67e22;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .f1-pain ul {
+      margin: 0 0 8px 0;
+      padding-left: 1.2em;
+    }
+    .f1-pain ul li {
+      font-size: 12px;
       color: #333;
-      font-style: italic;
-      margin-bottom: 6px;
       line-height: 1.7;
+      margin-bottom: 3px;
     }
     .f1-pain .solve {
       font-size: 12px;
       color: #1a3a5c;
       font-weight: 700;
+      display: block;
+      margin-top: 6px;
     }
 
     /* 3ステップブロック 40% */
@@ -84,62 +97,77 @@
     }
     .f1-steps-title {
       text-align: center;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 700;
       color: #1a3a5c;
       background: #e8eef6;
       padding: 8px;
       border-radius: 6px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
     .f1-step {
-      display: flex;
-      gap: 14px;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       background: #fff;
       border: 1.5px solid #dde3ea;
       border-radius: 10px;
-      padding: 14px 16px;
+      padding: 12px 16px;
       box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      align-items: flex-start;
+    }
+    .f1-step-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 6px;
     }
     .f1-step-num {
-      min-width: 44px;
-      height: 44px;
+      min-width: 40px;
+      height: 40px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 900;
-      font-size: 12px;
+      font-size: 11px;
       color: #fff;
       flex-direction: column;
+      flex-shrink: 0;
     }
     .f1-step-num.s1 { background: #1a3a5c; }
     .f1-step-num.s2 { background: #e67e22; }
     .f1-step-num.s3 { background: #27ae60; }
     .f1-step-num small {
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 400;
       opacity: 0.85;
+    }
+    .f1-step-body {
+      flex: 1;
     }
     .f1-step-body h3 {
       font-size: 13px;
       font-weight: 700;
       color: #1a3a5c;
-      margin-bottom: 4px;
     }
-    .f1-step-body p {
+    .f1-step-body .step-what {
       font-size: 11px;
       color: #555;
       line-height: 1.6;
+    }
+    .f1-step-result {
+      background: #f0f7f0;
+      border-left: 3px solid #27ae60;
+      padding: 5px 10px;
+      font-size: 11px;
+      color: #1d6b1d;
+      font-weight: 600;
+      border-radius: 0 4px 4px 0;
     }
 
     /* オファーブロック 25% */
     .f1-offer {
       background: linear-gradient(135deg, #1a3a5c, #2c5282);
       color: #fff;
-      padding: 18px 24px;
+      padding: 16px 24px;
       margin: 0;
     }
     .f1-offer-badge {
@@ -153,35 +181,32 @@
       margin-bottom: 8px;
     }
     .f1-offer h2 {
-      font-size: 15px;
+      font-size: 14px;
       font-weight: 700;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
-    .f1-offer p {
+    .f1-offer-steps {
       font-size: 11px;
-      opacity: 0.88;
-      line-height: 1.7;
-      margin-bottom: 12px;
+      line-height: 2;
+      opacity: 0.92;
+      margin-bottom: 10px;
+    }
+    .f1-offer-steps .arrow {
+      color: #e67e22;
+      font-weight: 700;
     }
     .f1-offer-row {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
     .f1-qr {
       width: 70px;
       height: 70px;
       background: #fff;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       flex-shrink: 0;
-      font-size: 9px;
-      color: #1a3a5c;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.3;
+      overflow: hidden;
     }
     .f1-contact {
       font-size: 11px;
@@ -193,7 +218,7 @@
       font-size: 12px;
       font-weight: 700;
       color: rgba(255,255,255,0.7);
-      padding: 8px 0 4px;
+      padding: 7px 0 4px;
       background: rgba(0,0,0,0.15);
       letter-spacing: 0.1em;
     }
@@ -209,26 +234,25 @@
     }
 
     .f2-head {
-      padding: 28px 32px 20px;
+      padding: 24px 32px 18px;
       border-bottom: 2px solid #e67e22;
-      min-height: 168px;
+      min-height: 160px;
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
     .f2-head .tag {
       font-size: 10px;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.15em;
       color: #e67e22;
       font-weight: 700;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
     .f2-head h1 {
-      font-size: 21px;
+      font-size: 19px;
       font-weight: 900;
-      line-height: 1.45;
-      margin-bottom: 10px;
+      line-height: 1.5;
+      margin-bottom: 8px;
       color: #fff;
     }
     .f2-head h1 em {
@@ -236,133 +260,157 @@
       font-style: normal;
     }
     .f2-head .sub {
-      font-size: 11.5px;
-      color: rgba(255,255,255,0.65);
-      line-height: 1.6;
+      font-size: 11px;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.7;
     }
 
     .f2-pain {
-      margin: 18px 32px;
-      padding: 14px 18px;
+      margin: 14px 32px;
+      padding: 12px 18px;
       border: 1px solid rgba(230,126,34,0.4);
       border-radius: 8px;
       background: rgba(230,126,34,0.07);
     }
-    .f2-pain p {
-      font-size: 11.5px;
-      color: rgba(255,255,255,0.75);
-      font-style: italic;
-      line-height: 1.8;
+    .f2-pain .pain-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e67e22;
       margin-bottom: 6px;
+      display: block;
+    }
+    .f2-pain ul {
+      margin: 0 0 8px 0;
+      padding-left: 1.2em;
+    }
+    .f2-pain ul li {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.8;
+      margin-bottom: 2px;
     }
     .f2-pain .solve {
-      font-size: 12px;
+      font-size: 11.5px;
       color: #e67e22;
       font-weight: 700;
-      font-style: normal;
+      display: block;
+      margin-top: 6px;
     }
 
     .f2-steps {
       flex: 1;
-      padding: 0 32px 14px;
+      padding: 0 32px 10px;
     }
     .f2-steps-title {
-      font-size: 12px;
+      font-size: 11px;
       font-weight: 700;
       letter-spacing: 0.15em;
       color: #e67e22;
-      text-transform: uppercase;
-      margin-bottom: 14px;
+      margin-bottom: 10px;
       padding-bottom: 6px;
       border-bottom: 1px solid rgba(255,255,255,0.1);
     }
     .f2-step {
+      margin-bottom: 10px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .f2-step-top {
       display: flex;
-      gap: 14px;
-      margin-bottom: 13px;
-      align-items: flex-start;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 5px;
     }
     .f2-step-num {
-      min-width: 36px;
-      height: 36px;
+      min-width: 32px;
+      height: 32px;
       border: 2px solid #e67e22;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 900;
       color: #e67e22;
       flex-shrink: 0;
+    }
+    .f2-step-body {
+      flex: 1;
     }
     .f2-step-body h3 {
       font-size: 13px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 3px;
     }
-    .f2-step-body p {
+    .f2-step-body .step-what {
       font-size: 11px;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.65);
       line-height: 1.6;
+    }
+    .f2-step-result {
+      margin-left: 44px;
+      background: rgba(39,174,96,0.15);
+      border-left: 3px solid #27ae60;
+      padding: 4px 10px;
+      font-size: 11px;
+      color: #5ddb8b;
+      font-weight: 600;
+      border-radius: 0 4px 4px 0;
     }
 
     .f2-offer {
-      background: rgba(230,126,34,0.12);
+      background: rgba(230,126,34,0.1);
       border-top: 2px solid #e67e22;
-      padding: 18px 32px;
+      padding: 16px 32px;
     }
     .f2-offer-badge {
       font-size: 10px;
       color: #e67e22;
       font-weight: 700;
       letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
+      display: block;
     }
     .f2-offer h2 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
       color: #fff;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
     }
-    .f2-offer p {
+    .f2-offer-steps {
       font-size: 11px;
-      color: rgba(255,255,255,0.7);
-      line-height: 1.7;
-      margin-bottom: 12px;
+      line-height: 2;
+      color: rgba(255,255,255,0.8);
+      margin-bottom: 10px;
+    }
+    .f2-offer-steps .arrow {
+      color: #e67e22;
+      font-weight: 700;
     }
     .f2-offer-row {
       display: flex;
       align-items: center;
-      gap: 16px;
+      gap: 14px;
     }
     .f2-qr {
       width: 70px;
       height: 70px;
       background: #fff;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #1a3a5c;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.3;
       flex-shrink: 0;
+      overflow: hidden;
     }
     .f2-contact {
       font-size: 11px;
-      line-height: 1.8;
-      color: rgba(255,255,255,0.75);
+      line-height: 1.9;
+      color: rgba(255,255,255,0.8);
     }
     .f2-footer-name {
       text-align: center;
       font-size: 11px;
       font-weight: 700;
       color: rgba(255,255,255,0.4);
-      padding: 8px;
+      padding: 7px;
       letter-spacing: 0.15em;
       border-top: 1px solid rgba(255,255,255,0.1);
     }
@@ -379,21 +427,24 @@
     .f3-head {
       background: #fff7f0;
       border-bottom: 4px solid #e67e22;
-      padding: 24px 28px 20px;
-      min-height: 168px;
+      padding: 22px 28px 18px;
+      min-height: 160px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       position: relative;
     }
-    .f3-head::before {
-      content: '🎷';
+    .f3-head-photo {
       position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 64px;
-      opacity: 0.15;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 170px;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.22;
+      mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 100%);
     }
     .f3-award {
       display: inline-flex;
@@ -405,44 +456,55 @@
       font-weight: 700;
       padding: 4px 12px;
       border-radius: 4px;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       width: fit-content;
     }
     .f3-head h1 {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 900;
       color: #1a3a5c;
-      line-height: 1.4;
+      line-height: 1.5;
       margin-bottom: 8px;
     }
     .f3-head h1 span {
       color: #e67e22;
     }
     .f3-head .sub {
-      font-size: 11.5px;
+      font-size: 11px;
       color: #555;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .f3-pain {
       background: #fef9f5;
-      border: 2px dashed #e67e22;
-      margin: 16px 24px;
-      padding: 14px 18px;
+      border: 2px solid #e67e22;
+      margin: 14px 24px;
+      padding: 12px 18px;
       border-radius: 8px;
     }
-    .f3-pain p {
-      font-size: 12px;
-      color: #444;
-      font-style: italic;
-      line-height: 1.7;
+    .f3-pain .pain-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #e67e22;
       margin-bottom: 6px;
+      display: block;
+    }
+    .f3-pain ul {
+      margin: 0 0 8px 0;
+      padding-left: 1.2em;
+    }
+    .f3-pain ul li {
+      font-size: 11.5px;
+      color: #444;
+      line-height: 1.7;
+      margin-bottom: 2px;
     }
     .f3-pain .solve {
-      font-size: 12.5px;
+      font-size: 12px;
       color: #1a3a5c;
       font-weight: 700;
-      font-style: normal;
+      display: block;
+      margin-top: 6px;
     }
 
     .f3-steps {
@@ -453,70 +515,70 @@
       background: #1a3a5c;
       color: #fff;
       text-align: center;
-      font-size: 12.5px;
+      font-size: 12px;
       font-weight: 700;
       padding: 8px 12px;
       border-radius: 6px;
-      margin-bottom: 14px;
+      margin-bottom: 12px;
     }
-    .f3-steps-flow {
+    .f3-steps-list {
       display: flex;
-      gap: 0;
-      align-items: stretch;
+      flex-direction: column;
+      gap: 8px;
     }
     .f3-step {
-      flex: 1;
       border: 2px solid #dde3ea;
       border-radius: 8px;
-      padding: 14px 12px;
-      position: relative;
+      padding: 10px 14px;
       background: #fff;
     }
-    .f3-step:not(:last-child)::after {
-      content: '▶';
-      position: absolute;
-      right: -16px;
-      top: 50%;
-      transform: translateY(-50%);
-      color: #e67e22;
-      font-size: 16px;
-      z-index: 1;
-    }
-    .f3-steps-flow .f3-step:not(:last-child) {
-      margin-right: 20px;
+    .f3-step-top {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 5px;
     }
     .f3-step-label {
-      font-size: 9.5px;
+      font-size: 10px;
       font-weight: 700;
       color: #fff;
-      padding: 2px 8px;
+      padding: 3px 10px;
       border-radius: 12px;
       display: inline-block;
-      margin-bottom: 6px;
+      flex-shrink: 0;
     }
     .lbl-1 { background: #1a3a5c; }
     .lbl-2 { background: #e67e22; }
     .lbl-3 { background: #27ae60; }
     .f3-step h3 {
-      font-size: 12.5px;
+      font-size: 13px;
       font-weight: 700;
       color: #1a3a5c;
-      margin-bottom: 5px;
     }
-    .f3-step p {
-      font-size: 10px;
+    .f3-step .step-what {
+      font-size: 10.5px;
       color: #666;
       line-height: 1.6;
+      margin-bottom: 5px;
+    }
+    .f3-step-result {
+      background: #f0f7f0;
+      border-left: 3px solid #27ae60;
+      padding: 4px 10px;
+      font-size: 10.5px;
+      color: #1d6b1d;
+      font-weight: 600;
+      border-radius: 0 4px 4px 0;
     }
 
     .f3-offer {
       background: linear-gradient(135deg, #e67e22 0%, #cf6d17 100%);
       color: #fff;
-      padding: 18px 24px;
+      padding: 16px 24px;
     }
     .f3-offer-inner {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       align-items: flex-start;
     }
     .f3-offer-text { flex: 1; }
@@ -530,34 +592,27 @@
       margin-bottom: 6px;
     }
     .f3-offer h2 {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 700;
-      margin-bottom: 6px;
-    }
-    .f3-offer p {
-      font-size: 10.5px;
-      opacity: 0.9;
-      line-height: 1.7;
       margin-bottom: 8px;
     }
-    .f3-offer small {
-      font-size: 10px;
-      opacity: 0.8;
+    .f3-offer-steps {
+      font-size: 10.5px;
+      line-height: 2;
+      opacity: 0.95;
+      margin-bottom: 6px;
+    }
+    .f3-offer-steps .arrow {
+      font-weight: 700;
+      opacity: 0.7;
     }
     .f3-qr {
       width: 80px;
       height: 80px;
       background: #fff;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #1a3a5c;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.4;
       flex-shrink: 0;
+      overflow: hidden;
       margin-top: 4px;
     }
     .f3-footer-name {
@@ -570,16 +625,28 @@
       letter-spacing: 0.12em;
     }
 
+    /* ===== 演奏写真 ===== */
+    .flyer-photo {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .f2-photo {
+      width: 100%;
+      height: 90px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      opacity: 0.75;
+      filter: grayscale(20%);
+    }
+
     /* ===== レスポンシブ ===== */
     @media (max-width: 660px) {
       .flyer-a4 { width: 100%; min-height: auto; }
       .flyer-wrapper { padding: 0; }
-      .f3-steps-flow {
-        flex-direction: column;
-        gap: 12px;
-      }
-      .f3-step:not(:last-child)::after { display: none; }
-      .f3-steps-flow .f3-step:not(:last-child) { margin-right: 0; }
     }
   </style>
 </head>
@@ -623,66 +690,81 @@
         <!-- ①タイトル 20% -->
         <div class="f1-head">
           <span class="award">🏆 楽器店大賞2022 受賞グループ</span>
-          <h1>店頭イベントで「試奏」と「成約」を作ります！</h1>
-          <p class="sub">〜東京に行かなくても、トッププロの演奏でお客様を呼べる〜</p>
+          <h1>サックスのコンサートで、<br>お客様が楽器を買いやすくなります</h1>
+          <p class="sub">
+            「楽器店大賞2022」受賞グループが、あなたのお店に行きます。<br>
+            東京まで行かなくても、プロの生演奏をお届けできます。
+          </p>
         </div>
 
         <!-- ②悩み共感 15% -->
         <div class="f1-pain">
-          <p class="quote">「試奏までは来てくれるけど、最後の一押しでネット通販に流れてしまう…」</p>
-          <p class="quote">「高額な在庫の回転率を上げたいが、きっかけがない…」</p>
-          <p class="solve">その悩み、演奏イベントを「集客装置」に変えることで解決できます。</p>
+          <span class="pain-label">こんなことで困っていませんか？</span>
+          <ul>
+            <li>試奏はするけど、最後に買ってくれない</li>
+            <li>高い楽器の在庫がなかなか売れない</li>
+          </ul>
+          <span class="solve">→ この2つの問題を、コンサートイベントで解決できます。</span>
         </div>
+
+        <!-- 演奏写真 -->
+        <img class="flyer-photo" src="../_DSC0895-18.png" alt="Green Ray Saxophone Quartet 演奏風景">
 
         <!-- ③3ステップ 40% -->
         <div class="f1-steps">
-          <div class="f1-steps-title">GreenRayが提案する「売れる」イベントの流れ</div>
+          <div class="f1-steps-title">コンサートイベントの流れ（3ステップ）</div>
 
           <div class="f1-step">
-            <div class="f1-step-num s1">
-              <small>Step</small>1
+            <div class="f1-step-top">
+              <div class="f1-step-num s1"><small>Step</small>1</div>
+              <div class="f1-step-body">
+                <h3>お客様を集めます</h3>
+                <p class="step-what">「楽器店大賞2022受賞グループが来る」というお知らせを出します。<br>権威ある受賞歴が、来店のきっかけになります。</p>
+              </div>
             </div>
-            <div class="f1-step-body">
-              <h3>集客する</h3>
-              <p>「楽器店大賞2022 受賞グループ」が来る！という権威性で、来店動機を作ります。</p>
-            </div>
+            <div class="f1-step-result">→ 結果：お客様がお店に来ます</div>
           </div>
 
           <div class="f1-step">
-            <div class="f1-step-num s2">
-              <small>Step</small>2
+            <div class="f1-step-top">
+              <div class="f1-step-num s2"><small>Step</small>2</div>
+              <div class="f1-step-body">
+                <h3>プロが目の前で演奏します</h3>
+                <p class="step-what">生のサックス四重奏を演奏し、演奏後にトークもします。</p>
+              </div>
             </div>
-            <div class="f1-step-body">
-              <h3>感動させる</h3>
-              <p>圧倒的なプロの生演奏とトークで、会場の熱量を最高潮まで上げます。</p>
-            </div>
+            <div class="f1-step-result">→ 結果：お客様が「すごい！弾いてみたい！」と感じます</div>
           </div>
 
           <div class="f1-step">
-            <div class="f1-step-num s3">
-              <small>Step</small>3
+            <div class="f1-step-top">
+              <div class="f1-step-num s3"><small>Step</small>3</div>
+              <div class="f1-step-body">
+                <h3>「試奏してみますか？」と声をかけます</h3>
+                <p class="step-what">感動したタイミングで、同じ楽器を試してもらいます。</p>
+              </div>
             </div>
-            <div class="f1-step-body">
-              <h3>クロージング</h3>
-              <p>感動したその熱量のまま、「同じフレーズを試奏してみませんか？」と楽器へ誘導します。</p>
-            </div>
+            <div class="f1-step-result">→ 結果：お客様が楽器を試して、購入につながります</div>
           </div>
         </div>
 
         <!-- ④オファー 25% -->
         <div class="f1-offer">
-          <span class="f1-offer-badge">ディーラー様限定</span>
-          <h2>無料オンライン相談（30分）受付中</h2>
-          <p>
-            まずは貴店の課題（集客・在庫・スペース）をお聞かせください。<br>
-            ノナカ貿易様の「正規保証・特約店制度」の価値を最大化するプランをご提案します。
-          </p>
+          <span class="f1-offer-badge">ディーラー様限定・無料</span>
+          <h2>まずオンラインで30分だけお話しください</h2>
+          <div class="f1-offer-steps">
+            ① QRコードをスマホで読み取る<br>
+            <span class="arrow">↓</span>　メールアプリが開きます<br>
+            ② メールを送る（内容は何でもOK）<br>
+            <span class="arrow">↓</span>　担当者から返信します<br>
+            ③ 30分のオンライン相談（無料）を行います
+          </div>
           <div class="f1-offer-row">
-            <div class="f1-qr">QR<br>コード<br>ここに</div>
+            <div class="f1-qr" id="qr1"></div>
             <div class="f1-contact">
-              ▼ 当日の演奏ダイジェスト動画・<br>
-              お問い合わせはこちら<br>
-              <br>
+              貴店の状況をお聞きして、<br>
+              ノナカ貿易様の特約店制度に<br>
+              合ったプランをご提案します。<br>
               <strong>Green Ray Saxophone Quartet</strong>
             </div>
           </div>
@@ -705,60 +787,81 @@
         <!-- ①タイトル -->
         <div class="f2-head">
           <div class="tag">🏆 楽器店大賞2022受賞グループ ／ Green Ray Saxophone Quartet</div>
-          <h1>店頭イベントで<br>「<em>試奏</em>」と「<em>成約</em>」を<br>作ります。</h1>
-          <p class="sub">〜東京に行かなくても、トッププロの演奏でお客様を呼べる〜</p>
+          <h1>サックスのコンサートで、<br>お客様が<em>楽器を買いやすく</em>なります</h1>
+          <p class="sub">
+            東京まで行かなくても、プロの生演奏をお届けできます。<br>
+            「楽器店大賞2022」の権威性で、来店のきっかけをつくります。
+          </p>
         </div>
+
+        <!-- 演奏写真 -->
+        <img class="f2-photo" src="../_DSC0895-18.png" alt="Green Ray Saxophone Quartet 演奏風景">
 
         <!-- ②悩み -->
         <div class="f2-pain">
-          <p>「試奏までは来てくれるけど、最後の一押しでネット通販に流れてしまう…」</p>
-          <p>「高額な在庫の回転率を上げたいが、きっかけがない…」</p>
-          <p class="solve">その悩み、演奏イベントを「集客装置」に変えることで解決できます。</p>
+          <span class="pain-label">こんなことで困っていませんか？</span>
+          <ul>
+            <li>試奏はするけど、最後に買ってくれない</li>
+            <li>高い楽器の在庫がなかなか売れない</li>
+          </ul>
+          <span class="solve">→ この2つの問題を、コンサートイベントで解決できます。</span>
         </div>
 
         <!-- ③3ステップ -->
         <div class="f2-steps">
-          <div class="f2-steps-title">GreenRayが提案する「売れる」イベントの流れ</div>
+          <div class="f2-steps-title">コンサートイベントの流れ（3ステップ）</div>
 
           <div class="f2-step">
-            <div class="f2-step-num">1</div>
-            <div class="f2-step-body">
-              <h3>集客する</h3>
-              <p>「楽器店大賞2022 受賞グループ」が来る！という権威性で、来店動機を作ります。</p>
+            <div class="f2-step-top">
+              <div class="f2-step-num">1</div>
+              <div class="f2-step-body">
+                <h3>お客様を集めます</h3>
+                <p class="step-what">受賞歴を使ったお知らせで、来店のきっかけをつくります。</p>
+              </div>
             </div>
+            <div class="f2-step-result">→ 結果：お客様がお店に来ます</div>
           </div>
 
           <div class="f2-step">
-            <div class="f2-step-num">2</div>
-            <div class="f2-step-body">
-              <h3>感動させる</h3>
-              <p>圧倒的なプロの生演奏とトークで、会場の熱量を最高潮まで上げます。</p>
+            <div class="f2-step-top">
+              <div class="f2-step-num">2</div>
+              <div class="f2-step-body">
+                <h3>プロが目の前で演奏します</h3>
+                <p class="step-what">生のサックス四重奏と演奏後のトークで、お客様に体験を届けます。</p>
+              </div>
             </div>
+            <div class="f2-step-result">→ 結果：お客様が「弾いてみたい！」と感じます</div>
           </div>
 
           <div class="f2-step">
-            <div class="f2-step-num">3</div>
-            <div class="f2-step-body">
-              <h3>クロージング</h3>
-              <p>感動したその熱量のまま、「同じフレーズを試奏してみませんか？」と楽器へ誘導します。</p>
+            <div class="f2-step-top">
+              <div class="f2-step-num">3</div>
+              <div class="f2-step-body">
+                <h3>「試奏してみますか？」と声をかけます</h3>
+                <p class="step-what">感動したタイミングで、楽器を試してもらいます。</p>
+              </div>
             </div>
+            <div class="f2-step-result">→ 結果：お客様が楽器を試して、購入につながります</div>
           </div>
         </div>
 
         <!-- ④オファー -->
         <div class="f2-offer">
-          <div class="f2-offer-badge">ディーラー様限定</div>
-          <h2>無料オンライン相談（30分）受付中</h2>
-          <p>
-            まずは貴店の課題（集客・在庫・スペース）をお聞かせください。<br>
-            ノナカ貿易様の「正規保証・特約店制度」の価値を最大化するプランをご提案します。
-          </p>
+          <span class="f2-offer-badge">ディーラー様限定・無料</span>
+          <h2>まずオンラインで30分だけお話しください</h2>
+          <div class="f2-offer-steps">
+            ① QRコードをスマホで読み取る
+            <span class="arrow">→</span> メールアプリが開きます<br>
+            ② メールを送る（内容は何でもOK）
+            <span class="arrow">→</span> 担当者から返信します<br>
+            ③ 30分のオンライン相談（無料）を行います
+          </div>
           <div class="f2-offer-row">
-            <div class="f2-qr">QR<br>コード<br>ここに</div>
+            <div class="f2-qr" id="qr2"></div>
             <div class="f2-contact">
-              ▼ 当日の演奏ダイジェスト動画・<br>
-              お問い合わせはこちら<br>
-              <br>
+              貴店の状況をお聞きして、<br>
+              ノナカ貿易様の特約店制度に<br>
+              合ったプランをご提案します。<br>
               <strong style="color:#fff;">Green Ray Saxophone Quartet</strong>
             </div>
           </div>
@@ -773,43 +876,59 @@
   <!-- ===== チラシ案3 ===== -->
   <div id="plan3" class="flyer-panel">
     <p style="color:var(--gray); font-size:0.88rem; margin-bottom:1rem;">
-      白ベースで親しみやすく読みやすいデザイン。3ステップを横並びフローで視覚的に整理。
+      白ベースで親しみやすく読みやすいデザイン。3ステップを縦並びで明快に整理。
     </p>
     <div class="flyer-wrapper">
       <div class="flyer-a4 f3">
 
         <!-- ①タイトル -->
         <div class="f3-head">
+          <img class="f3-head-photo" src="../_DSC0895-18.png" alt="演奏風景">
           <div class="f3-award">🏆 楽器店大賞2022 受賞グループ</div>
-          <h1>店頭イベントで<br>「試奏」と「<span>成約</span>」を作ります！</h1>
-          <p class="sub">〜東京に行かなくても、トッププロの演奏でお客様を呼べる〜</p>
+          <h1>サックスのコンサートで、<br>お客様が<span>楽器を買いやすく</span>なります</h1>
+          <p class="sub">
+            「楽器店大賞2022」受賞グループが、あなたのお店に行きます。<br>
+            東京まで行かなくても、プロの生演奏をお届けできます。
+          </p>
         </div>
 
         <!-- ②悩み -->
         <div class="f3-pain">
-          <p>「試奏までは来てくれるけど、最後の一押しでネット通販に流れてしまう…」</p>
-          <p>「高額な在庫の回転率を上げたいが、きっかけがない…」</p>
-          <p class="solve">その悩み、演奏イベントを「集客装置」に変えることで解決できます。</p>
+          <span class="pain-label">こんなことで困っていませんか？</span>
+          <ul>
+            <li>試奏はするけど、最後に買ってくれない</li>
+            <li>高い楽器の在庫がなかなか売れない</li>
+          </ul>
+          <span class="solve">→ この2つの問題を、コンサートイベントで解決できます。</span>
         </div>
 
         <!-- ③3ステップ -->
         <div class="f3-steps">
-          <div class="f3-steps-title">GreenRayが提案する「売れる」イベントの流れ</div>
-          <div class="f3-steps-flow">
+          <div class="f3-steps-title">コンサートイベントの流れ（3ステップ）</div>
+          <div class="f3-steps-list">
             <div class="f3-step">
-              <span class="f3-step-label lbl-1">Step 1</span>
-              <h3>集客する</h3>
-              <p>「楽器店大賞2022受賞グループ」が来る！という権威性で、来店動機を作ります。</p>
+              <div class="f3-step-top">
+                <span class="f3-step-label lbl-1">Step 1</span>
+                <h3>お客様を集めます</h3>
+              </div>
+              <p class="step-what">受賞歴を使ったお知らせで、来店のきっかけをつくります。</p>
+              <div class="f3-step-result">→ 結果：お客様がお店に来ます</div>
             </div>
             <div class="f3-step">
-              <span class="f3-step-label lbl-2">Step 2</span>
-              <h3>感動させる</h3>
-              <p>圧倒的なプロの生演奏とトークで、会場の熱量を最高潮まで上げます。</p>
+              <div class="f3-step-top">
+                <span class="f3-step-label lbl-2">Step 2</span>
+                <h3>プロが目の前で演奏します</h3>
+              </div>
+              <p class="step-what">生のサックス四重奏と演奏後のトークで、お客様に体験を届けます。</p>
+              <div class="f3-step-result">→ 結果：お客様が「弾いてみたい！」と感じます</div>
             </div>
             <div class="f3-step">
-              <span class="f3-step-label lbl-3">Step 3</span>
-              <h3>クロージング</h3>
-              <p>感動の熱量のまま「同じフレーズを試奏してみませんか？」と楽器へ誘導します。</p>
+              <div class="f3-step-top">
+                <span class="f3-step-label lbl-3">Step 3</span>
+                <h3>「試奏してみますか？」と声をかけます</h3>
+              </div>
+              <p class="step-what">感動したタイミングで、楽器を試してもらいます。</p>
+              <div class="f3-step-result">→ 結果：お客様が楽器を試して、購入につながります</div>
             </div>
           </div>
         </div>
@@ -818,15 +937,17 @@
         <div class="f3-offer">
           <div class="f3-offer-inner">
             <div class="f3-offer-text">
-              <span class="f3-offer-badge">ディーラー様限定</span>
-              <h2>無料オンライン相談（30分）受付中</h2>
-              <p>
-                まずは貴店の課題（集客・在庫・スペース）をお聞かせください。<br>
-                ノナカ貿易様の「正規保証・特約店制度」の価値を最大化するプランをご提案します。
-              </p>
-              <small>▼ 当日の演奏ダイジェスト動画・お問い合わせはこちら</small>
+              <span class="f3-offer-badge">ディーラー様限定・無料</span>
+              <h2>まずオンラインで30分だけお話しください</h2>
+              <div class="f3-offer-steps">
+                ① QRコードをスマホで読み取る<br>
+                <span class="arrow">↓</span> メールアプリが開きます<br>
+                ② メールを送る（内容は何でもOK）<br>
+                <span class="arrow">↓</span> 担当者から返信します<br>
+                ③ 30分の無料オンライン相談
+              </div>
             </div>
-            <div class="f3-qr">QR<br>コード<br>ここに</div>
+            <div class="f3-qr" id="qr3"></div>
           </div>
         </div>
         <div class="f3-footer-name">Green Ray Saxophone Quartet</div>
@@ -842,13 +963,43 @@
 </footer>
 
 <script>
+  const QR_TEXT = "mailto:green.ray.sax.iuki@gmail.com";
+
+  // display:none の要素に canvas を描くと寸法が 0 になるブラウザがあるため
+  // 各パネルが初めて表示されたときに一度だけ生成する
+  const qrConfig = {
+    qr1: { width: 70,  height: 70,  colorDark: "#1a3a5c" },
+    qr2: { width: 70,  height: 70,  colorDark: "#0d1b2a" },
+    qr3: { width: 80,  height: 80,  colorDark: "#1a3a5c" },
+  };
+  const qrDone = {};
+
+  function generateQR(id) {
+    if (qrDone[id]) return;
+    const cfg = qrConfig[id];
+    new QRCode(document.getElementById(id), {
+      text: QR_TEXT,
+      width: cfg.width,
+      height: cfg.height,
+      colorDark: cfg.colorDark,
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+    qrDone[id] = true;
+  }
+
+  // plan1 は初期表示なので即生成
+  generateQR("qr1");
+
   function showTab(panelId, btn) {
-    // 全パネル非表示
     document.querySelectorAll('.flyer-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    // 選択したものを表示
     document.getElementById(panelId).classList.add('active');
     btn.classList.add('active');
+
+    // パネルが表示されてから QR を生成（未生成の場合のみ）
+    if (panelId === 'plan2') generateQR('qr2');
+    if (panelId === 'plan3') generateQR('qr3');
   }
 </script>
 
