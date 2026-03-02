@@ -1,0 +1,360 @@
+/* ===== 共通スタイル ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --green: #1a5c3a;
+  --green-light: #2d8653;
+  --accent: #e2a024;
+  --light-bg: #f4fbf6;
+  --text: #222;
+  --gray: #666;
+  --border: #d0e8da;
+  --white: #fff;
+  --red: #c0392b;
+  --yellow: #f39c12;
+  --green-ok: #27ae60;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  color: var(--text);
+  background: var(--light-bg);
+  line-height: 1.7;
+}
+
+/* ===== ナビゲーション ===== */
+header {
+  background: var(--green);
+  color: var(--white);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.site-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.site-logo span {
+  color: var(--accent);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--white);
+  border-bottom-color: var(--accent);
+}
+
+/* ===== メインコンテンツ ===== */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* ===== ヒーローセクション ===== */
+.hero {
+  background: linear-gradient(135deg, var(--green) 0%, #2d8653 100%);
+  color: var(--white);
+  text-align: center;
+  padding: 4rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.hero .subtitle {
+  font-size: 1rem;
+  opacity: 0.85;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== セクション共通 ===== */
+.section-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--green);
+  border-left: 4px solid var(--accent);
+  padding-left: 0.75rem;
+  margin-bottom: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+/* ===== タスクカード ===== */
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+  margin-bottom: 2.5rem;
+}
+
+.task-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.task-card.urgent {
+  border-left-color: var(--red);
+}
+
+.task-card.ongoing {
+  border-left-color: var(--yellow);
+}
+
+.task-card.done {
+  border-left-color: var(--green-ok);
+  opacity: 0.75;
+}
+
+.task-badge {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.task-badge.urgent { background: #fde8e8; color: var(--red); }
+.task-badge.ongoing { background: #fef3e2; color: #b7770d; }
+.task-badge.done { background: #e8f8ef; color: var(--green-ok); }
+
+.task-info h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.2rem;
+}
+
+.task-info p {
+  font-size: 0.88rem;
+  color: var(--gray);
+}
+
+/* ===== タイムライン ===== */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.6rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: var(--border);
+}
+
+.timeline-month {
+  margin-bottom: 2rem;
+}
+
+.timeline-month-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--light-bg);
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  display: inline-block;
+  margin-bottom: 1rem;
+  position: relative;
+  left: -1.5rem;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 1rem;
+  padding-left: 0.5rem;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -1.65rem;
+  top: 0.55rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  border: 2px solid var(--white);
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.timeline-date {
+  font-size: 0.8rem;
+  color: var(--gray);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+
+.timeline-content {
+  background: var(--white);
+  border-radius: 8px;
+  padding: 0.9rem 1.2rem;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+  font-size: 0.92rem;
+}
+
+.timeline-content strong {
+  color: var(--green);
+}
+
+/* ===== 実施済みイベントテーブル ===== */
+.event-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 2.5rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: var(--white);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+th {
+  background: var(--green);
+  color: var(--white);
+  padding: 0.75rem 1rem;
+  text-align: left;
+  font-weight: 600;
+}
+
+td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover td {
+  background: #f0f9f4;
+}
+
+/* ===== 取引先リスト ===== */
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.partner-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+}
+
+.partner-card h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--green);
+  margin-bottom: 0.3rem;
+}
+
+.partner-card .partner-contact {
+  font-size: 0.82rem;
+  color: var(--gray);
+  margin-bottom: 0.4rem;
+}
+
+.partner-card p {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* ===== フッター ===== */
+footer {
+  background: var(--green);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  margin-top: 4rem;
+}
+
+footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+/* ===== レスポンシブ ===== */
+@media (max-width: 640px) {
+  .header-inner {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem 0;
+    gap: 0.5rem;
+  }
+  nav ul { gap: 1rem; }
+  .hero h1 { font-size: 1.5rem; }
+  main { padding: 2rem 1rem; }
+}
