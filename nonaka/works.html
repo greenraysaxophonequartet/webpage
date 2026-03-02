@@ -140,6 +140,9 @@
       font-weight: 400;
       opacity: 0.85;
     }
+    .f1-step-body {
+      flex: 1;
+    }
     .f1-step-body h3 {
       font-size: 13px;
       font-weight: 700;
@@ -330,6 +333,9 @@
       font-weight: 900;
       color: #e67e22;
       flex-shrink: 0;
+    }
+    .f2-step-body {
+      flex: 1;
     }
     .f2-step-body h3 {
       font-size: 13px;
@@ -959,38 +965,41 @@
 <script>
   const QR_TEXT = "mailto:green.ray.sax.iuki@gmail.com";
 
-  new QRCode(document.getElementById("qr1"), {
-    text: QR_TEXT,
-    width: 70,
-    height: 70,
-    colorDark: "#1a3a5c",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
+  // display:none の要素に canvas を描くと寸法が 0 になるブラウザがあるため
+  // 各パネルが初めて表示されたときに一度だけ生成する
+  const qrConfig = {
+    qr1: { width: 70,  height: 70,  colorDark: "#1a3a5c" },
+    qr2: { width: 70,  height: 70,  colorDark: "#0d1b2a" },
+    qr3: { width: 80,  height: 80,  colorDark: "#1a3a5c" },
+  };
+  const qrDone = {};
 
-  new QRCode(document.getElementById("qr2"), {
-    text: QR_TEXT,
-    width: 70,
-    height: 70,
-    colorDark: "#0d1b2a",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
+  function generateQR(id) {
+    if (qrDone[id]) return;
+    const cfg = qrConfig[id];
+    new QRCode(document.getElementById(id), {
+      text: QR_TEXT,
+      width: cfg.width,
+      height: cfg.height,
+      colorDark: cfg.colorDark,
+      colorLight: "#ffffff",
+      correctLevel: QRCode.CorrectLevel.M,
+    });
+    qrDone[id] = true;
+  }
 
-  new QRCode(document.getElementById("qr3"), {
-    text: QR_TEXT,
-    width: 80,
-    height: 80,
-    colorDark: "#1a3a5c",
-    colorLight: "#ffffff",
-    correctLevel: QRCode.CorrectLevel.M
-  });
+  // plan1 は初期表示なので即生成
+  generateQR("qr1");
 
   function showTab(panelId, btn) {
     document.querySelectorAll('.flyer-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
     document.getElementById(panelId).classList.add('active');
     btn.classList.add('active');
+
+    // パネルが表示されてから QR を生成（未生成の場合のみ）
+    if (panelId === 'plan2') generateQR('qr2');
+    if (panelId === 'plan3') generateQR('qr3');
   }
 </script>
 
