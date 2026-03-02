@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>作品集（チラシ案） | Green Ray Saxophone Quartet</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
   <style>
     /* ===== チラシ共通 ===== */
     .flyer-a4 {
@@ -173,15 +174,8 @@
       height: 70px;
       background: #fff;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       flex-shrink: 0;
-      font-size: 9px;
-      color: #1a3a5c;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.3;
+      overflow: hidden;
     }
     .f1-contact {
       font-size: 11px;
@@ -342,15 +336,8 @@
       height: 70px;
       background: #fff;
       border-radius: 6px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #1a3a5c;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.3;
       flex-shrink: 0;
+      overflow: hidden;
     }
     .f2-contact {
       font-size: 11px;
@@ -386,14 +373,17 @@
       justify-content: center;
       position: relative;
     }
-    .f3-head::before {
-      content: '🎷';
+    .f3-head-photo {
       position: absolute;
-      right: 20px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 64px;
-      opacity: 0.15;
+      right: 0;
+      top: 0;
+      height: 100%;
+      width: 170px;
+      object-fit: cover;
+      object-position: center top;
+      opacity: 0.22;
+      mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to left, rgba(0,0,0,0.8) 0%, transparent 100%);
     }
     .f3-award {
       display: inline-flex;
@@ -549,15 +539,8 @@
       height: 80px;
       background: #fff;
       border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 9px;
-      color: #1a3a5c;
-      font-weight: 700;
-      text-align: center;
-      line-height: 1.4;
       flex-shrink: 0;
+      overflow: hidden;
       margin-top: 4px;
     }
     .f3-footer-name {
@@ -568,6 +551,24 @@
       color: rgba(255,255,255,0.8);
       padding: 7px;
       letter-spacing: 0.12em;
+    }
+
+    /* ===== 演奏写真 ===== */
+    .flyer-photo {
+      width: 100%;
+      height: 110px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+    }
+    .f2-photo {
+      width: 100%;
+      height: 100px;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      opacity: 0.75;
+      filter: grayscale(20%);
     }
 
     /* ===== レスポンシブ ===== */
@@ -634,6 +635,9 @@
           <p class="solve">その悩み、演奏イベントを「集客装置」に変えることで解決できます。</p>
         </div>
 
+        <!-- 演奏写真 -->
+        <img class="flyer-photo" src="../_DSC0895-18.png" alt="Green Ray Saxophone Quartet 演奏風景">
+
         <!-- ③3ステップ 40% -->
         <div class="f1-steps">
           <div class="f1-steps-title">GreenRayが提案する「売れる」イベントの流れ</div>
@@ -678,7 +682,7 @@
             ノナカ貿易様の「正規保証・特約店制度」の価値を最大化するプランをご提案します。
           </p>
           <div class="f1-offer-row">
-            <div class="f1-qr">QR<br>コード<br>ここに</div>
+            <div class="f1-qr" id="qr1"></div>
             <div class="f1-contact">
               ▼ 当日の演奏ダイジェスト動画・<br>
               お問い合わせはこちら<br>
@@ -708,6 +712,9 @@
           <h1>店頭イベントで<br>「<em>試奏</em>」と「<em>成約</em>」を<br>作ります。</h1>
           <p class="sub">〜東京に行かなくても、トッププロの演奏でお客様を呼べる〜</p>
         </div>
+
+        <!-- 演奏写真 -->
+        <img class="f2-photo" src="../_DSC0895-18.png" alt="Green Ray Saxophone Quartet 演奏風景">
 
         <!-- ②悩み -->
         <div class="f2-pain">
@@ -754,7 +761,7 @@
             ノナカ貿易様の「正規保証・特約店制度」の価値を最大化するプランをご提案します。
           </p>
           <div class="f2-offer-row">
-            <div class="f2-qr">QR<br>コード<br>ここに</div>
+            <div class="f2-qr" id="qr2"></div>
             <div class="f2-contact">
               ▼ 当日の演奏ダイジェスト動画・<br>
               お問い合わせはこちら<br>
@@ -780,6 +787,7 @@
 
         <!-- ①タイトル -->
         <div class="f3-head">
+          <img class="f3-head-photo" src="../_DSC0895-18.png" alt="演奏風景">
           <div class="f3-award">🏆 楽器店大賞2022 受賞グループ</div>
           <h1>店頭イベントで<br>「試奏」と「<span>成約</span>」を作ります！</h1>
           <p class="sub">〜東京に行かなくても、トッププロの演奏でお客様を呼べる〜</p>
@@ -826,7 +834,7 @@
               </p>
               <small>▼ 当日の演奏ダイジェスト動画・お問い合わせはこちら</small>
             </div>
-            <div class="f3-qr">QR<br>コード<br>ここに</div>
+            <div class="f3-qr" id="qr3"></div>
           </div>
         </div>
         <div class="f3-footer-name">Green Ray Saxophone Quartet</div>
@@ -842,11 +850,41 @@
 </footer>
 
 <script>
+  const QR_TEXT = "mailto:green.ray.sax.iuki@gmail.com";
+
+  // QRコード生成（ネイビー）
+  new QRCode(document.getElementById("qr1"), {
+    text: QR_TEXT,
+    width: 70,
+    height: 70,
+    colorDark: "#1a3a5c",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  // QRコード生成（ダーク：黒）
+  new QRCode(document.getElementById("qr2"), {
+    text: QR_TEXT,
+    width: 70,
+    height: 70,
+    colorDark: "#0d1b2a",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
+  // QRコード生成（オレンジ）
+  new QRCode(document.getElementById("qr3"), {
+    text: QR_TEXT,
+    width: 80,
+    height: 80,
+    colorDark: "#1a3a5c",
+    colorLight: "#ffffff",
+    correctLevel: QRCode.CorrectLevel.M
+  });
+
   function showTab(panelId, btn) {
-    // 全パネル非表示
     document.querySelectorAll('.flyer-panel').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    // 選択したものを表示
     document.getElementById(panelId).classList.add('active');
     btn.classList.add('active');
   }
