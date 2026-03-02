@@ -1,0 +1,334 @@
+/* ===== 共通スタイル ===== */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --navy: #1a3a5c;
+  --orange: #e67e22;
+  --light-bg: #f4f7fb;
+  --text: #222;
+  --gray: #666;
+  --border: #dde3ea;
+  --white: #fff;
+}
+
+body {
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+  color: var(--text);
+  background: var(--light-bg);
+  line-height: 1.7;
+}
+
+/* ===== ナビゲーション ===== */
+header {
+  background: var(--navy);
+  color: var(--white);
+  padding: 0 2rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.header-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.site-logo {
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--white);
+  text-decoration: none;
+}
+
+.site-logo span {
+  color: var(--orange);
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2rem;
+}
+
+nav a {
+  color: rgba(255,255,255,0.85);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+nav a:hover,
+nav a.active {
+  color: var(--white);
+  border-bottom-color: var(--orange);
+}
+
+/* ===== メインコンテンツ ===== */
+main {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+/* ===== ヒーローセクション ===== */
+.hero {
+  background: linear-gradient(135deg, var(--navy) 0%, #2c5282 100%);
+  color: var(--white);
+  text-align: center;
+  padding: 5rem 2rem;
+  border-radius: 12px;
+  margin-bottom: 3rem;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.hero h1 span {
+  color: var(--orange);
+}
+
+.hero p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--orange);
+  color: var(--white);
+  padding: 0.75rem 2rem;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1rem;
+  transition: background 0.2s, transform 0.1s;
+}
+
+.btn:hover {
+  background: #cf6d17;
+  transform: translateY(-1px);
+}
+
+/* ===== セクションカード ===== */
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  border-left: 4px solid var(--orange);
+  padding-left: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 1.8rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  border: 1px solid var(--border);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
+.card h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: var(--gray);
+}
+
+/* ===== アバウトページ ===== */
+.profile-block {
+  background: var(--white);
+  border-radius: 12px;
+  padding: 2.5rem;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--navy), #2c5282);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+  margin: 0 auto 1.5rem;
+}
+
+.profile-block h2 {
+  font-size: 1.5rem;
+  color: var(--navy);
+  text-align: center;
+  margin-bottom: 0.3rem;
+}
+
+.profile-subtitle {
+  text-align: center;
+  color: var(--orange);
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.profile-bio {
+  color: var(--gray);
+  font-size: 0.95rem;
+  line-height: 1.9;
+}
+
+.member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.2rem;
+  margin-bottom: 2rem;
+}
+
+.member-card {
+  background: var(--white);
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border: 1px solid var(--border);
+}
+
+.member-avatar {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2c5282, var(--orange));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin: 0 auto 0.8rem;
+}
+
+.member-card h4 {
+  font-size: 1rem;
+  color: var(--navy);
+  margin-bottom: 0.2rem;
+}
+
+.member-card p {
+  font-size: 0.82rem;
+  color: var(--gray);
+}
+
+/* ===== ワークスページ ===== */
+.flyer-tabs {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 0.6rem 1.5rem;
+  border: 2px solid var(--navy);
+  border-radius: 40px;
+  background: transparent;
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.flyer-panel {
+  display: none;
+}
+
+.flyer-panel.active {
+  display: block;
+}
+
+/* ===== A4チラシ本体 ===== */
+.flyer-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.flyer-a4 {
+  width: 595px;
+  min-height: 842px;
+  background: var(--white);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  position: relative;
+  overflow: hidden;
+  font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+}
+
+/* ===== フッター ===== */
+footer {
+  background: var(--navy);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  margin-top: 4rem;
+}
+
+footer a {
+  color: var(--orange);
+  text-decoration: none;
+}
+
+@media (max-width: 640px) {
+  .header-inner {
+    flex-direction: column;
+    height: auto;
+    padding: 1rem 0;
+    gap: 0.5rem;
+  }
+  nav ul { gap: 1rem; }
+  .hero h1 { font-size: 1.5rem; }
+  .flyer-a4 {
+    width: 100%;
+    min-height: auto;
+  }
+}
